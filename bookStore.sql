@@ -26,7 +26,7 @@ CREATE TABLE Books (
 CREATE TABLE Orders (
     orderID INT AUTO_INCREMENT PRIMARY KEY,
     customerID INT NOT NULL,
-    orderDate INT NOT NULL,
+    orderDate VARCHAR(255) NOT NULL,
     numOrder INT NOT NULL,
     totalAmount INT NOT NULL,
     FOREIGN KEY (customerID) REFERENCES Customers(customerID) ON DELETE CASCADE
@@ -50,27 +50,48 @@ CREATE TABLE Inventories (
 );
 
 -- Insert example data
+-- Insert example data into Customers table
 INSERT INTO Customers (firstName, lastName, emailID) VALUES
     ('John', 'Doe', 'john.doe@example.com'),
-    ('Alice', 'Smith', 'alice.smith@example.com');
+    ('Jane', 'Smith', 'jane.smith@example.com'),
+    ('Bob', 'Johnson', 'bob.johnson@example.com'),
+    ('Alice', 'Williams', 'alice.williams@example.com'),
+    ('Charlie', 'Brown', 'charlie.brown@example.com');
 
-INSERT INTO Books (bookName, category, author, price) VALUES
-    ('The Great Gatsby', 'Fiction', 'F. Scott Fitzgerald', 15),
-    ('To Kill a Mockingbird', 'Fiction', 'Harper Lee', 12);
+-- Insert example data into Books table
+INSERT INTO Books (bookID, bookName, category, author, price) VALUES
+    (1, 'The Great Gatsby', 'Fiction', 'F. Scott Fitzgerald', 20),
+    (2, 'To Kill a Mockingbird', 'Fiction', 'Harper Lee', 18),
+    (3, '1984', 'Dystopian', 'George Orwell', 25),
+    (4, 'The Catcher in the Rye', 'Fiction', 'J.D. Salinger', 22),
+    (5, 'Pride and Prejudice', 'Romance', 'Jane Austen', 15);
 
+-- Insert example data into Orders table
 INSERT INTO Orders (customerID, orderDate, numOrder, totalAmount) VALUES
-    (1, 20240207, 1, 15),
-    (2, 20240207, 2, 24);
+    (1, '2024-02-08 12:00:00', 1001, 60),
+    (2, '2024-02-08 12:30:00', 1002, 45),
+    (3, '2024-02-08 13:00:00', 1003, 30),
+    (4, '2024-02-08 13:30:00', 1004, 75),
+    (5, '2024-02-08 14:00:00', 1005, 50);
 
+-- Insert example data into OrderDetails table
 INSERT INTO OrderDetails (orderID, bookID) VALUES
-    (1, 1),
+    (1, 5),
+    (1, 2),
     (2, 2),
-    (2, 1);
+    (3, 1),
+    (4, 3);
 
+-- Insert example data into Inventories table
 INSERT INTO Inventories (bookID, quantityInStock) VALUES
     (1, 50),
-    (2, 30);
+    (2, 30),
+    (3, 20),
+    (4, 40),
+    (5, 25);
 
 -- Enable foreign key checks and commit changes
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
+
+
