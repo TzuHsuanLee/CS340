@@ -80,7 +80,7 @@ INSERT INTO OrderDetails (orderID, bookID) VALUES
     (1, 2),
     (2, 2),
     (3, 1),
-    (4, 3);
+    (4, 5);
 
 -- Insert example data into Inventories table
 INSERT INTO Inventories (bookID, quantityInStock) VALUES
@@ -95,3 +95,8 @@ SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 
+SELECT * FROM Customers;
+SELECT * FROM Books;
+SELECT * FROM Orders;
+SELECT * FROM OrderDetails;
+SELECT * FROM Inventories;
