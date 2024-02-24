@@ -11,8 +11,8 @@ INSERT INTO Orders (customerID, orderDate, numOrder, totalAmount)
 VALUES (:customerIDInput, NOW(), :numOrderInput, :totalAmountInput);
 
 -- Query to add books to an order (OrderDetails)
-INSERT INTO OrderDetails (orderID, bookID)
-VALUES (:orderIDInput, :bookIDInput);
+INSERT INTO OrderDetails (orderID, bookID, qty, price, line_total)
+VALUES (:orderIDInput, :bookIDInput, :qtyInput, :priceInput, :qtyInput * :priceInput);
 
 -- Query to update customer information
 UPDATE Customers
@@ -35,8 +35,15 @@ DELETE FROM Customers WHERE customerID = :customerIDToDelete;
 -- Query to delete a book
 DELETE FROM Books WHERE bookID = :bookIDToDelete;
 
--- Query to delete an order
+-- Query to delete an order and its details
+BEGIN TRANSACTION;
+DELETE FROM OrderDetails WHERE orderID = :orderIDToDelete;
 DELETE FROM Orders WHERE orderID = :orderIDToDelete;
+COMMIT;
 
 -- Query to remove a book from an order (OrderDetails)
 DELETE FROM OrderDetails WHERE orderID = :orderIDToDelete AND bookID = :bookIDToDelete;
+
+-- Query to search for a customer by name
+SELECT * FROM Customers
+WHERE firstName LIKE :searchInput OR lastName LIKE :searchInput;
