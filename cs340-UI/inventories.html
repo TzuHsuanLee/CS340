@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Inventories</title>
+</head>
+<body>
+    <header>
+        <button>
+            <a href="index.html" id="homeButton">Home</a>
+        </button>
+        <h1>Manage Inventories</h1>
+    </header>
+
+    <main>
+        <form id="addInventoryForm">
+            <label for="inventoryID">Inventory ID:</label>
+            <input type="text" id="inventoryID" name="inventoryID" placeholder="Enter inventory ID" required>
+
+            <label for="bookID">Book ID:</label>
+            <input type="text" id="bookID" name="bookID" placeholder="Enter book ID" required>
+
+            <label for="quantityInStock">Quantity In Stock:</label>
+            <input type="text" id="quantityInStock" name="quantityInStock" placeholder="Enter quantity" required>
+
+            <button type="submit">Add Inventory</button>
+        </form>
+
+        <table id="inventoriesTable">
+            <thead>
+                <tr>
+                    <th>Inventory ID</th>
+                    <th>Book ID</th>
+                    <th>Quantity In Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Inventory rows -->
+                <tr>
+                    <td>01</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <!-- Add more Inventory rows as needed -->
+
+            </tbody>
+        </table>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

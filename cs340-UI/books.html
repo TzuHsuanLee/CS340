@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Books</title>
+</head>
+<body>
+    <header>
+        <button>
+            <a href="index.html" id="homeButton">Home</a>
+        </button>
+        <h1>Manage Books</h1>
+    </header>
+
+    <main>
+        <form id="addBookForm">
+            <label for="bookID">Book ID:</label>
+            <input type="text" id="bookID" name="bookID" placeholder="Enter book ID" required>
+
+            <label for="bookName">Book Name:</label>
+            <input type="text" id="bookName" name="bookName" placeholder="Enter book name" required>
+
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" placeholder="Enter category" required>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" placeholder="Enter author" required>
+
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" placeholder="Enter price" required>
+
+            <button type="submit">Add Book</button>
+        </form>
+
+        <table id="booksTable">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Book Name</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Book rows -->
+                <tr>
+                    <td>1</td>
+                    <td>The Great Gatsby</td>
+                    <td>Fiction</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>$10.99</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <!-- Add more book rows as needed -->
+
+            </tbody>
+        </table>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

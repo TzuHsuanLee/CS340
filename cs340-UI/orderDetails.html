@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Order Details</title>
+</head>
+<body>
+    <header>
+        <button>
+            <a href="index.html" id="homeButton">Home</a>
+        </button>
+        <h1>Manage Order Details</h1>
+    </header>
+
+    <main>
+        <form id="addOrderDetailsForm">
+            <label for="orderID">Order ID:</label>
+            <input type="text" id="orderID" name="orderID" placeholder="Enter order ID" required>
+
+            <label for="customerID">Customer ID:</label>
+            <input type="text" id="customerID" name="customerID" placeholder="Enter customer ID" required>
+
+            <button type="submit">Add Order Details</button>
+        </form>
+
+        <table id="orderDetailsTable">
+            <thead>
+                <tr>
+                    <th>Last Name</th>
+                    <th>Customer ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Order Details rows -->
+                <tr>
+                    <td>Doe</td>
+                    <td>12345</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <!-- Add more Order Details rows as needed -->
+
+            </tbody>
+        </table>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Customers</title>
+</head>
+<body>
+    <header>
+        <button>
+            <a href="index.html" id="homeButton">Home</a>
+        </button>
+        <h1>Manage Customers</h1>
+    </header>
+
+    <main>
+        <form id="addCustomerForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+            
+            <label for="customerID">Customer ID:</label>
+            <input type="text" id="customerID" name="customerID" placeholder="Enter customer ID" required>
+            
+            <button type="submit">Add Customer</button>
+        </form>
+
+        <table id="customersTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Customer ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Customer rows -->
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>12345</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>Jamie</td>
+                    <td>Doe</td>
+                    <td>67890</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>Amy</td>
+                    <td>John</td>
+                    <td>54321</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>Allen</td>
+                    <td>Pollen</td>
+                    <td>24680</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+
+                <tr>
+                    <td>Jackson</td>
+                    <td>Andrews</td>
+                    <td>13579</td>
+                    <td><button class="updateButton">Update</button> <button class="deleteButton">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -94,6 +94,10 @@ INSERT INTO Inventories (bookID, quantityInStock) VALUES
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
+-- Add dynamic filter in SELECT statement
+SELECT * FROM Orders WHERE customerID = :dynamicCustomerID;
+
+
 
 SELECT * FROM Customers;
 SELECT * FROM Books;
