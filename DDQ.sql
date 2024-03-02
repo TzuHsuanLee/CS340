@@ -103,4 +103,4 @@ SELECT * FROM Customers;
 SELECT * FROM Books;
 SELECT * FROM Orders;
 SELECT * FROM OrderDetails;
-SELECT * FROM Inventories;
+-- SELECT * FROM Inventories;  
