@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,8 +36,46 @@
             <label for="quantityInStock">Quantity In Stock:</label>
             <input type="text" id="quantityInStock" name="quantityInStock" placeholder="Enter quantity in stock" required>
 
-
             <button type="submit">Add Book</button>
+        </form>
+
+        <h2>Add a New Book</h2>
+        <form id="addNewBookForm">
+            <label for="bookID">Book ID:</label>
+            <select id="bookID">
+                <option value="1">Book 1</option>
+                <option value="2">Book 2</option>
+                <option value="3">Book 3</option>
+            </select>
+
+            <label for="bookName">Book Name:</label>
+            <select id="bookName">
+                <option value="Book A">Book A</option>
+                <option value="Book B">Book B</option>
+                <option value="Book C">Book C</option>
+            </select>
+
+            <label for="author">Author:</label>
+            <select id="author">
+                <option value="Author X">Author X</option>
+                <option value="Author Y">Author Y</option>
+                <option value="Author Z">Author Z</option>
+            </select>
+
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="Fiction">Fiction</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+            </select>
+
+            <label for="price">Price:</label>
+            <select id="price">
+                <option value="$10.99">$10.99</option>
+                <option value="$19.99">$19.99</option>
+                <option value="$29.99">$29.99</option>
+            </select>
+
+            <button type="submit">Submit</button>
         </form>
 
         <table id="booksTable">
