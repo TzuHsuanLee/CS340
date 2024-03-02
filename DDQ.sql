@@ -83,12 +83,12 @@ INSERT INTO OrderDetails (orderID, bookID) VALUES
     (4, 5);
 
 -- Insert example data into Inventories table
-INSERT INTO Inventories (bookID, quantityInStock) VALUES
-    (1, 50),
-    (2, 30),
-    (3, 20),
-    (4, 40),
-    (5, 25);
+-- INSERT INTO Inventories (bookID, quantityInStock) VALUES
+--     (1, 50),
+--     (2, 30),
+--     (3, 20),
+--     (4, 40),
+--     (5, 25);
 
 -- Enable foreign key checks and commit changes
 SET FOREIGN_KEY_CHECKS=1;
