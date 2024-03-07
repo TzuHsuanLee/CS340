@@ -4,8 +4,12 @@
     SETUP
 */
 var express = require('express');   // We are using the express library for the web server
+var bodyParser = require('body-parser');
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 9543;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9535;                 // Set a port number at the top so it's easy to change in the future
+
+// create application/json parser
+var jsonParser = bodyParser.json()
 
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars');     // Import express-handlebars
@@ -69,6 +73,27 @@ app.get('/orderDetails', function(req, res)
     });                        // Note the call to render() and not send(). Using render() ensures the templating engine
 }); 
 
+app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
+    let data = req.body;
+    let bookID = parseInt(data.bookID);
+    let orderID = parseInt(data.orderID);
+    let deleteOrderDetail= `DELETE FROM OrderDetails WHERE bookID = ? AND orderID = ?`;
+
+    db.pool.query(deleteOrderDetail, [bookID, orderID], function(error, rows, fields){
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+            }
+
+            else
+            {
+                res.sendStatus(204);
+            }
+    })
+    
+});
 
 
 /*
