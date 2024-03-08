@@ -6,7 +6,7 @@
 var express = require('express');   // We are using the express library for the web server
 var bodyParser = require('body-parser');
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 9534;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9535;                 // Set a port number at the top so it's easy to change in the future
 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -78,7 +78,9 @@ app.get('/orderDetails', function(req, res)
     });                        // Note the call to render() and not send(). Using render() ensures the templating engine
 }); 
 
-//Add
+/*
+    Add
+*/
 app.post('/add-book-form' , jsonParser, function(req, res){
     // console.log(req.body); 
     let data = req.body;
@@ -106,11 +108,95 @@ app.post('/add-book-form' , jsonParser, function(req, res){
             res.redirect('/books');
         }
     })
+})
+
+app.post('/add-customer-form' , jsonParser, function(req, res){
+    // console.log(req.body); 
+    let data = req.body;
+    let customerID =  parseInt(data.customerID);
+    let firstName = data.firstName;
+    let lastName = data.lastName;
+
+    query1 = `INSERT INTO Customers (firstName, lastName, customerID) VALUES ('${firstName}', '${lastName}', '${customerID}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/customers');
+        }
+    })
+})
+
+app.post('/add-order-form' , jsonParser, function(req, res){
+        // console.log(req.body); 
+        let data = req.body;
+        let orderID =  parseInt(data.orderID);
+        let customerID =  parseInt(data.customerID);
+        let orderDate = data.orderDate;
+        let numOrder = data.numOrder;
+        let totalAmount = data.totalAmount;
+
     
+        query1 = `INSERT INTO Orders (orderID, customerID, orderDate, numOrder, totalAmount) VALUES ('${orderID}', '${customerID}', '${orderDate}', '${numOrder}', '${totalAmount}')`;
+        db.pool.query(query1, function(error, rows, fields){
+    
+            // Check to see if there was an error
+            if (error) {
+    
+                // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                console.log(error)
+                res.sendStatus(400);
+            }
+    
+            // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+            // presents it on the screen
+            else
+            {
+                res.redirect('/orders');
+            }
+        })
+    })
+
+app.post('/add-orderDetail-form' , jsonParser, function(req, res){
+    console.log(req.body); 
+    let data = req.body;
+    let orderID =  parseInt(data.orderID);
+    let bookID =  parseInt(data.bookID);
+
+    query1 = `INSERT INTO OrderDetails (orderID, bookID) VALUES ('${orderID}', '${bookID}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/orderDetails');
+        }
+    })
 })
 
 
-//Delete
+/*
+    Delete
+*/
 app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
     let data = req.body;
     let bookID = parseInt(data.bookID);
@@ -130,7 +216,6 @@ app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
                 res.sendStatus(204);
             }
     })
-    
 });
 
 app.delete('/delete-book-ajax/', jsonParser, function(req,res,next){
