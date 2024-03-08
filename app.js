@@ -24,6 +24,11 @@ var db = require('./database/db-connector')
 /*
     ROUTES
 */
+
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+
 app.get('/', function(req, res)
 {
     res.render('index');                    // Note the call to render() and not send(). Using render() ensures the templating engine
@@ -72,6 +77,38 @@ app.get('/orderDetails', function(req, res)
         });
     });                        // Note the call to render() and not send(). Using render() ensures the templating engine
 }); 
+
+//Add
+app.post('/add-book-form' , jsonParser, function(req, res){
+    // console.log(req.body); 
+    let data = req.body;
+    let bookID =  parseInt(data.bookID);
+    let bookName = data.bookName;
+    let category = data.category;
+    let author = data.author;
+    let price =  data.price;
+
+    query1 = `INSERT INTO Books (bookID, bookName, category, author, price) VALUES ('${bookID}', '${bookName}', '${category}', '${author}', ${price})`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/books');
+        }
+    })
+    
+})
+
 
 //Delete
 app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
