@@ -168,7 +168,7 @@ app.post('/add-order-form' , jsonParser, function(req, res){
     })
 
 app.post('/add-orderDetail-form' , jsonParser, function(req, res){
-    console.log(req.body); 
+    // console.log(req.body); 
     let data = req.body;
     let orderID =  parseInt(data.orderID);
     let bookID =  parseInt(data.bookID);
@@ -218,6 +218,7 @@ app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
     })
 });
 
+
 app.delete('/delete-book-ajax/', jsonParser, function(req,res,next){
     let data = req.body;
     let bookID = parseInt(data.bookID);
@@ -262,21 +263,20 @@ app.delete('/delete-order-ajax/', jsonParser, function(req,res,next){
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error);
             res.sendStatus(400);
-            }
+        }
 
-            else
-            {
-                // Run the second query
-                db.pool.query(deleteOrder, [orderID], function(error, rows, fields) {
+        else {
+            // Run the second query
+            db.pool.query(deleteOrder, [orderID], function(error, rows, fields) {
 
-                    if (error) {
-                        console.log(error);
-                        res.sendStatus(400);
-                    } else {
-                        res.sendStatus(204);
-                    }
-                })
-            }
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
     })
 });
 
@@ -291,8 +291,39 @@ app.delete('/delete-customer-ajax/', jsonParser, function(req,res,next){
     // Run the 1st query
     db.pool.query(findOrderDetails, [customerID], function(error, rows, fields) {
         rows.forEach((row) => {
-            console.log(row.orderID)
+            let deleteOrderDetail = `DELETE FROM OrderDetails WHERE orderID = ?`;
+
+            db.pool.query(deleteOrderDetail, [row.orderID], function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+            });
         })
+    });
+
+    let deleteOrder = `DELETE FROM Orders WHERE customerID = ?`;
+    let deleteCustomer = `DELETE FROM Customers WHERE customerID = ?`;
+    db.pool.query(deleteOrder, [customerID], function(error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        else {
+            // Run the second query
+            db.pool.query(deleteCustomer, [customerID], function(error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.sendStatus(204);
+                }
+            })
+        }
     });
 
     // db.pool.query(deleteOrderDetail, [customerID], function(error, rows, fields){
