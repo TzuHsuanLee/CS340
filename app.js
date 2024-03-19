@@ -16,7 +16,14 @@ var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({extname: ".hbs"}));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
-app.use(express.static('public'))
+app.use(express.static('public', { 
+    setHeaders: (res, path, stat) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
+    }
+}));
+
 
 // Database
 var db = require('./database/db-connector')
@@ -326,40 +333,102 @@ app.delete('/delete-customer-ajax/', jsonParser, function(req,res,next){
         }
     });
 
-    // db.pool.query(deleteOrderDetail, [customerID], function(error, rows, fields){
-    //     if (error) {
-
-    //         // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-    //         console.log(error);
-    //         res.sendStatus(400);
-    //         }
-
-    //         else
-    //         {
-    //             db.pool.query(deleteOrder, [customerID], function(error, rows, fields){
-    //             if (error) {
-
-    //                 // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-    //                 console.log(error);
-    //                 res.sendStatus(400);
-    //                 }
-
-    //                 else{
-    //                     // Run the second query
-    //                     db.pool.query(deleteCustomer, [customerID], function(error, rows, fields) {
-
-    //                         if (error) {
-    //                             console.log(error);
-    //                             res.sendStatus(400);
-    //                         } else {
-    //                             res.sendStatus(204);
-    //                         }
-    //                     })
-    //                 }
-    //             })
-    //         }
-    //     })
+    
 });
+
+/* UPDATE */
+app.put('/put-order-details-ajax', function(req, res, next) {
+    let data = req.body;
+
+    let orderID = parseInt(data.orderID);
+    let bookID = parseInt(data.bookID);
+
+    let queryUpdateOrderDetails = `UPDATE your_order_details_table SET bookID = ? WHERE orderID = ?`;
+
+    // Run the query to update order details
+    db.pool.query(queryUpdateOrderDetails, [bookID, orderID], function(error, rows, fields) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            // If there was no error, send a success status back
+            res.sendStatus(200);
+        }
+    });
+});
+
+// Update route for orders
+app.put('/put-order-ajax', function(req, res, next) {
+  let data = req.body;
+
+  // Extract data from request
+  let orderId = parseInt(data.orderId);
+  let newStatus = data.status;
+
+  // SQL query to update order status
+  let queryUpdateOrder = `UPDATE orders SET status = ? WHERE id = ?`;
+
+  // Execute the update query
+  db.pool.query(queryUpdateOrder, [newStatus, orderId], function(error, rows, fields) {
+    if (error) {
+      console.log(error);
+      res.sendStatus(400); // Bad request
+    } else {
+      res.sendStatus(200); // OK
+    }
+  });
+});
+
+// Update route for customers
+app.put('/put-customer-ajax', function(req, res, next) {
+  let data = req.body;
+
+  // Extract data from request
+  let customerId = parseInt(data.customerId);
+  let newFirstName = data.firstName;
+  let newLastName = data.lastName;
+
+  // SQL query to update customer information
+  let queryUpdateCustomer = `UPDATE customers SET firstName = ?, lastName = ? WHERE id = ?`;
+
+  // Execute the update query
+  db.pool.query(queryUpdateCustomer, [newFirstName, newLastName, customerId], function(error, rows, fields) {
+    if (error) {
+      console.log(error);
+      res.sendStatus(400); // Bad request
+    } else {
+      res.sendStatus(200); // OK
+    }
+  });
+});
+
+
+// Update route for books
+app.put('/put-book-ajax', function(req, res, next) {
+  let data = req.body;
+
+  // Extract data from request
+  let bookId = parseInt(data.bookId);
+  let newBookName = data.bookName;
+  let newCategory = data.category;
+  let newAuthor = data.author;
+  let newPrice = parseFloat(data.price); // Convert to float for price
+
+  // SQL query to update book information
+  let queryUpdateBook = `UPDATE books SET bookName = ?, category = ?, author = ?, price = ? WHERE id = ?`;
+
+  // Execute the update query
+  db.pool.query(queryUpdateBook, [newBookName, newCategory, newAuthor, newPrice, bookId], function(error, rows, fields) {
+    if (error) {
+      console.log(error);
+      res.sendStatus(400); // Bad request
+    } else {
+      res.sendStatus(200); // OK
+    }
+  });
+});
+
 
 /*
     LISTENER
