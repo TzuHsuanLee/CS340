@@ -36,5 +36,28 @@
                 {{/each}}
             </tbody>
         </table>
+
+	<h2>Updating Customer Information</h2>
+<p>To update a specific customer's information, select their ID from the drop-down menu and enter the new details in the fields below.</p>
+<form id="update-customer-form-ajax">
+
+    <label for="customerSelect">Select Customer ID: </label>
+    <select name="customerSelect" id="customerSelect">
+        <option value="test">Select a Customer</option>
+        {{#each customers}}
+        <option value="{{this.customerId}}">{{this.customerId}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-first-name">First Name: </label>
+    <input type="text" id="input-first-name" name="input-first-name" placeholder="Enter new first name" required>
+
+    <label for="input-last-name">Last Name: </label>
+    <input type="text" id="input-last-name" name="input-last-name" placeholder="Enter new last name" required>
+
+    <input type="submit" value="Update">
+</form>
+
+<script src="./js/updateCustomers.js"></script>
     </main>
 </body>

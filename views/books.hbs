@@ -46,5 +46,33 @@
             </tbody>
         </table>
 
+	<h2>Updating A Book's Details Form</h2>
+<p>To update a specific book's details, select the book from the drop-down menu and enter the new details below</p>
+<form id="update-book-form-ajax">
+
+    <label for="input-book-id">Book ID: </label>
+    <select name="input-book-id" id="bookIDSelect">
+        <option value="">Select a Book</option>
+        {{#each books}}
+        <option value="{{this.bookID}}">{{this.bookID}}</option>
+        {{/each}}
+    </select>
+
+    <label for="input-book-name">Book Name: </label>
+    <input type="text" id="input-book-name" name="input-book-name" placeholder="Enter new Book Name" required>
+
+    <label for="input-category">Category: </label>
+    <input type="text" id="input-category" name="input-category" placeholder="Enter new Category" required>
+
+    <label for="input-author">Author: </label>
+    <input type="text" id="input-author" name="input-author" placeholder="Enter new Author" required>
+
+    <label for="input-price">Price: </label>
+    <input type="text" id="input-price" name="input-price" placeholder="Enter new Price" required>
+
+    <input type="submit" value="Update Book Details">
+
+</form>
+<script src="./js/updateBooks.js"></script>
     </main>
 </body>
