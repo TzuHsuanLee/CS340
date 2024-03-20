@@ -41,6 +41,7 @@ updateBookForm.addEventListener("submit", function (e) {
 
             // Update the table with the new data
             updateRow(xhttp.response, bookIDValue);
+            location.reload();
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

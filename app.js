@@ -6,7 +6,7 @@
 var express = require('express');   // We are using the express library for the web server
 var bodyParser = require('body-parser');
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 9535;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 9531;                 // Set a port number at the top so it's easy to change in the future
 
 // create application/json parser
 var jsonParser = bodyParser.json()
@@ -213,15 +213,15 @@ app.delete('/delete-orderDetail-ajax/', jsonParser, function(req,res,next){
     db.pool.query(deleteOrderDetail, [bookID, orderID], function(error, rows, fields){
         if (error) {
 
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error);
-            res.sendStatus(400);
-            }
+        // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+        console.log(error);
+        res.sendStatus(400);
+        }
 
-            else
-            {
-                res.sendStatus(204);
-            }
+        else
+        {
+            res.sendStatus(204);
+        }
     })
 });
 
@@ -337,13 +337,14 @@ app.delete('/delete-customer-ajax/', jsonParser, function(req,res,next){
 });
 
 /* UPDATE */
-app.put('/put-order-details-ajax', function(req, res, next) {
+app.put('/put-order-details-ajax', jsonParser, function(req, res, next) {
     let data = req.body;
 
     let orderID = parseInt(data.orderID);
     let bookID = parseInt(data.bookID);
 
-    let queryUpdateOrderDetails = `UPDATE your_order_details_table SET bookID = ? WHERE orderID = ?`;
+    let queryUpdateOrderDetails = `UPDATE OrderDetails SET bookID = ? WHERE orderID = ?`;
+    let selectOrderDetails = `SELECT * FROM OrderDetails WHERE orderID = ?`;
 
     // Run the query to update order details
     db.pool.query(queryUpdateOrderDetails, [bookID, orderID], function(error, rows, fields) {
@@ -352,32 +353,44 @@ app.put('/put-order-details-ajax', function(req, res, next) {
             console.log(error);
             res.sendStatus(400);
         } else {
-            // If there was no error, send a success status back
-            res.sendStatus(200);
+            // Run the second query
+            db.pool.query(selectOrderDetails, [orderID], function(error, rows, fields) {
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
         }
     });
 });
 
 // Update route for orders
-app.put('/put-order-ajax', function(req, res, next) {
-  let data = req.body;
-
+app.put('/put-order-ajax', jsonParser, function(req, res, next) {
   // Extract data from request
-  let orderId = parseInt(data.orderId);
-  let newStatus = data.status;
+    let data = req.body;
+    let orderID =  parseInt(data.orderID);
+    let customerID =  parseInt(data.customerID);
+    let orderDate = data.orderDate;
+    let numOrder = data.numOrder;
+    let totalAmount = data.totalAmount;
 
   // SQL query to update order status
-  let queryUpdateOrder = `UPDATE orders SET status = ? WHERE id = ?`;
+    // let queryUpdateOrder = `UPDATE orders SET orderId = ? WHERE id = ?`;
+    let queryUpdateOrder = `UPDATE INTO Orders SET orderID, customerID, orderDate, numOrder, totalAmount = ? WHERE  orderID = ?`;
+    let selectOrderDetails = `SELECT * FROM Orders WHERE orderID = ?`;
+
 
   // Execute the update query
-  db.pool.query(queryUpdateOrder, [newStatus, orderId], function(error, rows, fields) {
-    if (error) {
-      console.log(error);
-      res.sendStatus(400); // Bad request
-    } else {
-      res.sendStatus(200); // OK
-    }
-  });
+    db.pool.query(queryUpdateOrder, [newStatus, orderId], function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400); // Bad request
+        } else {
+            res.sendStatus(200); // OK
+        }
+    });
 });
 
 // Update route for customers
