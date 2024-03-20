@@ -1,5 +1,11 @@
 // App.js
 
+ // Citation for this file- app.js
+ // Date: 3/18/2024
+ // Copied from Node JS Starter App Ecampus
+ // We looked at the Node JS Starter App from Ecampus to help us with a lot of implementation (including the update, add and delete function)
+ // Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 /*
     SETUP
 */
